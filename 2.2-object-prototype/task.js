@@ -1,15 +1,8 @@
 String.prototype.isPalindrome = function() {
     
-  let stringNew = new String;
-  let stringModified = this.replace(/\s/g,'').toLowerCase();
-  console.log(stringModified);
-  for (i = 0; i < stringModified.length; i++) {
-    stringNew[stringModified.length - 1- i] = stringModified[i];
-  };
-  console.log(stringNew);
-  stringNew = JSON.stringify(stringNew);
-  console.log(stringNew);
-  if (stringNew === stringModified) {
+  let stringBase = this.trim().split(" ").join("").toLowerCase();
+  let stringModified = stringBase.split("").reverse().join("");
+  if (stringBase === stringModified) {
     return true;
   } else {
     return false;
