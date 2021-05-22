@@ -4,40 +4,38 @@ function sleep(milliseconds) {
 };
 
 function sum(...args) {
-  // Замедление на половину секунды.
-  sleep(100); // Можно использовать другое //значение замедления.
+  sleep(100);
   return args.reduce((sum, arg) => {
-    return sum += +arg;
+    return sum += arg;
   }, 0);
 }
 
 function  compareArrays( arr1, arr2 ) {
-  return arr1.every((currentValue , index) => {return currentValue === arr2[index]}) && arr2.every((currentValue, index) => {return currentValue === arr1[index]})
-  
+  return arr1.length === arr2.length && arr1.every((currentValue , index) => 
+    currentValue === arr2[index]
+  ) 
 };
 
 function memorize(someFunc, limit=10) {
   const memory = [];
-   if (memory.lenght > limit) {
-    memory.splice(limit, memory.lenght - limit );
-  } ; 
-  
-  if (memory.findIndex((currentValue, index) => {
-    if (compareArrays(currentValue.args, ...args)) {
-      console.log("из памяти");
-      return currentValue.result
-    }}) === -1)  { 
-    
-      return (...args) => {
-        console.log("Не из памяти");
-        memory.push({
-            args : args,
-            result : someFunc(...args) 
-        });
-        return someFunc(...args)
+  return (...args) => {
+    const elementFromMemory = memory.find((currentValue) => 
+      compareArrays(currentValue.args, args));
+    if (!elementFromMemory) {
+      console.log("Не из памяти");
+      memory.push({
+        args : args,
+        result : someFunc(...args) 
+      });
+      if (memory.length > limit) {
+      memory.splice(limit);
       };
+      return memory[memory.length - 1].result
+    } else {
+      console.log("Найдено в памяти");
+      return elementFromMemory.result
     };
-  
+  };
 }; 
 
 

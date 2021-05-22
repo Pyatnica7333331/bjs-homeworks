@@ -21,14 +21,11 @@ function getTotalDamage() {
 
 
 function getValuestCountToSumValues(array, sum) {
-    let indexArray = [];
-    let a = array.reduce((sumElements, element, index) => {
-        sumElements += element;
-        if (sumElements >= sum) {
-            indexArray.push(index + 1)
+  
+    return array.reduce((accum, element, index) => {
+        if (accum.sumElements < sum) {
+            return {sumElements: accum.sumElements + element, count: accum.count + 1}
         };
-        return sumElements            
-        }, 0);
-    return (indexArray[0] || array.length);  
-    
+        return accum;           
+    }, {sumElements: 0, count: 0}).count;
 };
