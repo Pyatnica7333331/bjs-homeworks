@@ -26,7 +26,7 @@ class AlarmClock {
             }
         });
     };
-    getCurrentFormattedTime (){
+    getCurrentFormattedTime() {
         return new Date().toLocaleTimeString().slice(0,-3);
     };
     start() {
@@ -35,36 +35,40 @@ class AlarmClock {
                 return bell.callback()
             };
         };
-        function setInterval() {
-            () => { };
-            
-        };
-
+        
         if (!this.timerId) {
-            this.alarmCollection.forEach(bell => checkClock(bell));
-            this.timerId = setInterval(); 
+            this.timerId = setInterval(() => {
+                this.alarmCollection.forEach(bell => checkClock(bell));
+            }, 1000);
+            
         };
            
     };
     stop() {
-        function clearInterval() {
-            delete this.alarmCollection.id
-        };
         if (this.timerId) {
-            clearInterval();
-            delete this.timerId
+            clearInterval(this.timerId);
+            this.timerId = null
         };
 
     };
     printAlarms () {
-        console.log(`Печать всех будильников в количестве: ${this.alarmCollection.length}/n`);
+        console.log(`Печать всех будильников в количестве: ${this.alarmCollection.length}\n`);
         this.alarmCollection.forEach(bell => console.log(
-            `Будильник №${bell.id} заведен на ${getCurrentFormattedTime()}/n`)
+            `Будильник №${bell.id} заведен на ${bell.time}\n`)
         );
     };
     clearAlarms(){
         stop(); 
-        this.alarmCollection.splice();
+        this.alarmCollection = [];
     };
 };
-const bell = new AlarmClock();
+const phoneAlarm = new AlarmClock();
+function testCase() {
+    phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime(), () => console.log("Пора вставать"), 1);
+    phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime() + 1, () => {console.log("Вставай уже");
+    phoneAlarm.removeClock(2)}, 2);
+    phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime() + 2, () => {console.log("Вставай, а то проспишь!");
+    phoneAlarm.clearAlarms();
+    phoneAlarm.printAlarms()}, 3);
+    phoneAlarm.printAlarms();
+}
