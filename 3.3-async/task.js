@@ -17,21 +17,21 @@ class AlarmClock {
         };
     };
     removeClock (id) {
-        this.alarmCollection.find(bell => {
-            if (bell.id === id) {
-                this.alarmCollection.splice(this.alarmCollection.indexOf(id));
-                return "Будильник удален"
-            } else {
-                return "Будильник не удалось удалить"
-            }
-        });
+        
+        if (this.alarmCollection.find(bell => bell.id  === id)) {
+            this.alarmCollection.splice(this.alarmCollection.findIndex(bell => bell.id  === id));
+            return true + "Будильник удален"
+        } else {
+            return false + "Будильник не удалось удалить"
+        }
+        
     };
     getCurrentFormattedTime() {
         return new Date().toLocaleTimeString().slice(0,-3);
     };
     start() {
         function checkClock(bell){
-            if (bell.time = new Date().toLocaleTimeString().slice(0,-3)) {
+            if (bell.time === this.getCurrentFormattedTime()) {
                 return bell.callback()
             };
         };
@@ -58,17 +58,20 @@ class AlarmClock {
         );
     };
     clearAlarms(){
-        stop(); 
+        this.stop(); 
         this.alarmCollection = [];
     };
 };
 const phoneAlarm = new AlarmClock();
 function testCase() {
     phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime(), () => console.log("Пора вставать"), 1);
+    
     phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime() + 1, () => {console.log("Вставай уже");
     phoneAlarm.removeClock(2)}, 2);
+
     phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime() + 2, () => {console.log("Вставай, а то проспишь!");
     phoneAlarm.clearAlarms();
     phoneAlarm.printAlarms()}, 3);
+
     phoneAlarm.printAlarms();
 }
