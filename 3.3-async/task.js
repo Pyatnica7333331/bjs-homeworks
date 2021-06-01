@@ -30,11 +30,11 @@ class AlarmClock {
         return new Date().toLocaleTimeString().slice(0,-3);
     };
     start() {
-        checkClock (bell => {
-            if (bell.time === this.getCurrentFormattedTime()) {
-                return bell.callback()
+        let checkClock = () => {
+            if (this.time === this.getCurrentFormattedTime()) {
+                return this.callback()
             };
-        });
+        };
         
         if (!this.timerId) {
             this.timerId = setInterval(() => {
@@ -74,4 +74,5 @@ function testCase() {
     phoneAlarm.printAlarms()}, 3);
 
     phoneAlarm.printAlarms();
+    phoneAlarm.start();
 }
