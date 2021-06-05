@@ -30,9 +30,9 @@ class AlarmClock {
         return new Date().toLocaleTimeString().slice(0,-3);
     };
     start() {
-        let checkClock = () => {
-            if (this.time === this.getCurrentFormattedTime()) {
-                return this.callback()
+        let checkClock = (bell) => {
+            if (bell.time === this.getCurrentFormattedTime()) {
+                return bell.callback()
             };
         };
         
@@ -64,12 +64,12 @@ class AlarmClock {
 };
 const phoneAlarm = new AlarmClock();
 function testCase() {
-    phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime(), () => console.log("Пора вставать"), 1);
+    phoneAlarm.addClock("09:00", () => console.log("Пора вставать"), 1);
     
-    phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime() + 1, () => {console.log("Вставай уже");
+    phoneAlarm.addClock("09:01", () => {console.log("Вставай уже");
     phoneAlarm.removeClock(2)}, 2);
 
-    phoneAlarm.addClock(phoneAlarm.getCurrentFormattedTime() + 2, () => {console.log("Вставай, а то проспишь!");
+    phoneAlarm.addClock("09:03", () => {console.log("Вставай, а то проспишь!");
     phoneAlarm.clearAlarms();
     phoneAlarm.printAlarms()}, 3);
 
