@@ -20,9 +20,9 @@ class AlarmClock {
         
         if (this.alarmCollection.find(bell => bell.id  === id)) {
             this.alarmCollection.splice(this.alarmCollection.findIndex(bell => bell.id  === id));
-            return true + "Будильник удален"
+            return true, "Будильник удален"
         } else {
-            return false + "Будильник не удалось удалить"
+            return false, "Будильник не удалось удалить"
         }
         
     };
